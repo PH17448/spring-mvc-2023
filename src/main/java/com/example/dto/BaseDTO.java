@@ -1,19 +1,19 @@
 package com.example.dto;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BaseDTO<Entity> {
 	private Long id ;
-	private Timestamp createdDate ;
-	private Timestamp modifiedDate ;
+	private Date createdDate ;
+	private Date modifiedDate ;
 	private String createdBy ;
 	private String modifiedBy ;
 	private long[] ids ;
 	private List<Entity> listResult = new ArrayList<>();
 	private Integer page ;
-	private Integer maxPageItem ;
+	private Integer limit ;
 	private Integer totalPage ;
 	private Integer totalItem ;
 	private String sortName ;
@@ -26,16 +26,17 @@ public class BaseDTO<Entity> {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Timestamp getCreatedDate() {
+	
+	public Date getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(Timestamp createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public Timestamp getModifiedDate() {
+	public Date getModifiedDate() {
 		return modifiedDate;
 	}
-	public void setModifiedDate(Timestamp modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 	public String getCreatedBy() {
@@ -68,12 +69,7 @@ public class BaseDTO<Entity> {
 	public void setPage(Integer page) {
 		this.page = page;
 	}
-	public Integer getMaxPageItem() {
-		return maxPageItem;
-	}
-	public void setMaxPageItem(Integer maxPageItem) {
-		this.maxPageItem = maxPageItem;
-	}
+	
 	public Integer getTotalPage() {
 		return totalPage;
 	}
@@ -103,6 +99,12 @@ public class BaseDTO<Entity> {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public Integer getLimit() {
+		return limit;
+	}
+	public void setLimit(Integer limit) {
+		this.limit = limit;
 	}
 	
 	

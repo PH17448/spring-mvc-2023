@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +9,7 @@
 </head>
 <body>
 	<div class="main-content">
-		<form action='#' id="formSubmit" 
+		<form action="#" id="formSubmit" 
 			method="get">
 
 			<div class="main-content-inner">
@@ -49,7 +48,9 @@
 								</div>
 							</div>
 							<div class="row">
-								<table class="table table-bordered">
+							
+								<div class="col-sm-12">
+									<table class="table table-bordered">
 									<thead>
 										<tr>
 											<th>
@@ -61,9 +62,12 @@
 											<th>Thao tác</th>
 										</tr>
 									</thead>
+									
 									<tbody>
+									<c:if test="${not empty model.listResult  }">
 										<c:forEach var="item" items="${model.listResult}">
-											<tr>
+											
+												<tr>
 												<td>
 													<input class="form-check-input" type="checkbox"
 													value="${item.id}" id="checkbox_${item.id}"  />
@@ -78,9 +82,25 @@
 													</a>
 												</td>
 											</tr>
+											
 										</c:forEach>
+										</c:if>
+										<c:if test="${empty model.listResult  }">
+											<p class="text-danger">Không có dữ liệu !</p>
+										</c:if>
 									</tbody>
 								</table>
+								</div>
+								
+							</div>
+							<div class="row ">
+								<div class="col-sm-12">
+									<center>
+										<ul class="pagination" id="pagination"></ul>
+									</center>
+									<input type="hidden" value="" id="page" name="page" /> <input
+									type="hidden" value="" id="limit" name="limit" />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -90,7 +110,21 @@
 		</form>
 	</div>
 	<script>
-		
+	var totalPages = ${model.totalPage}
+	var currentPage = ${model.page};
+	var limit = 1 ;
+	$(function () {
+        window.pagObj = $('#pagination').twbsPagination({
+            totalPages: totalPages,
+            visiblePages: 10,
+            startPage : currentPage,
+            onPageClick: function (event, page) {
+            	$('#limit').val(limit);
+				$('#page').val(page);
+            	$('#formSubmit').submit();
+            }
+        })
+    });
 		
 	</script>
 </body>
