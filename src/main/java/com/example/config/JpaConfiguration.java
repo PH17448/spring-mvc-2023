@@ -25,8 +25,13 @@ public class JpaConfiguration {
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+		//load data source của mysql
 		em.setDataSource(dataSource());
+		
+		//load  persistence-data trong file persinstence.xml
 		em.setPersistenceUnitName("persistence-data");
+		
+		
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
 		em.setJpaProperties(additionalProperties());
@@ -53,7 +58,9 @@ public class JpaConfiguration {
 	
 	public Properties additionalProperties() {
 		Properties properties = new Properties();
+//		properties.setProperty("hibernate.hbm2ddl.auto","create-drop");
 //		properties.setProperty("hibernate.hbm2ddl.auto","create");
+//		properties.setProperty("hibernate.hbm2ddl.auto","update");
 		properties.setProperty("hibernate.hbm2ddl.auto","none");
 		properties.setProperty("hibernate.enable_lazy_load_no_trans","true");
 		return properties;
