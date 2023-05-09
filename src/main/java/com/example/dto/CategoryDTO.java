@@ -1,11 +1,10 @@
 package com.example.dto;
 
 public class CategoryDTO extends BaseDTO<CategoryDTO> {
+	
+	
 	private String name ;
 	private String code ;
-	
-	
-	
 	
 	
 	public String getName() {

@@ -1,10 +1,11 @@
 package com.example.service;
 
-import java.util.List;
+import java.util.Map;
 
-import com.example.dto.CategoryDTO;
+import org.springframework.stereotype.Service;
 
 
+@Service
 public interface ICategoryService {
-	List<CategoryDTO> findAll();
+	Map<String,String> findAll();
 }

@@ -15,7 +15,6 @@ public class NewConvertor {
 		entity.setContent(newDto.getContent());
 		entity.setShortDescription(newDto.getShortDescription());
 		entity.setThumbnail(newDto.getThumbnail());
-		
 		return entity ;
 	}
 	
@@ -28,6 +27,7 @@ public class NewConvertor {
 		newDto.setContent(newEntity.getContent());
 		newDto.setThumbnail(newEntity.getThumbnail());
 		newDto.setShortDescription(newEntity.getShortDescription());
+		newDto.setCategoryCode(newEntity.getCategory().getCode());
 		newDto.setCreatedDate(newEntity.getCreatedDate());
 		newDto.setCreatedBy(newEntity.getCreatedBy());
 		newDto.setModifiedDate(newEntity.getModifiedDate());

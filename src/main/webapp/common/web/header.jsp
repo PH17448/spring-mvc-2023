@@ -71,7 +71,7 @@
 											<li><a href="#">Pages</a>
 											<ul class="submenu">
 											<security:authorize access="isAnonymous()" >
-												<li><a href="#">Đăng nhập</a></li>
+												<li><a href='<c:url value="/dang-nhap" />'>Đăng nhập</a></li>
 												<li><a href="#">Đăng ký</a></li>
 											</security:authorize>
 											<security:authorize access="isAuthenticated()" >

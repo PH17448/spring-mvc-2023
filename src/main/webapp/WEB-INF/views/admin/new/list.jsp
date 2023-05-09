@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+<c:url var="APIurl" value="/api/new"  />
+<c:url var="NewURL" value="/quan-tri/bai-viet/danh-sach"/>
+<c:url var="EditNewUrl" value="/quan-tri/bai-viet/chinh-sua"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,21 +26,22 @@
 				<div class="page-content">
 					<div class="row">
 						<div class="col-xs-12">
-							<c:if test="${not empty messageResponse}">
-								<div class="alert alert-${alert}">${messageResponse}</div>
+							<c:if test="${not empty message}">
+								<div class="alert alert-${alert}">${message}</div>
 							</c:if>
 							<div class="widget-box table-filter">
 								<div class="table-btn-controls">
 									<div class="pull-right tableTools-container">
 										<div class="dt-buttons btn-overlap btn-group">
+											<c:url var="createNewUrl" value="/quan-tri/bai-viet/chinh-sua" />
 											<a flag="info"
 												class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
 												data-toggle="tooltip" title='Thêm bài viết'
-												href='#'> <span>
+												href='${ createNewUrl }'> <span>
 													<i class="fa fa-plus-circle bigger-110 purple"></i>
 											</span>
 											</a>
-											<button id="btnDelete" type="button"
+											<button id="btnDelete" type="button" onclick="warningBeforeDelete()"
 												class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
 												data-toggle="tooltip" title='Xóa bài viết'>
 												<span> <i class="fa fa-trash-o bigger-110 pink"></i>
@@ -75,9 +79,12 @@
 												<td>${item.title}</td>
 												<td>${item.shortDescription}</td>
 												<td>
+													<c:url var="updateNewUrl" value="/quan-tri/bai-viet/chinh-sua">
+														<c:param name="id" value="${ item.id }"></c:param>
+													</c:url>
 													<a class="btn btn-sm btn-primary btn-edit"
 														data-toggle="tooltip" title="Cập nhật bài viết"
-														href='#'><i class="fa fa-pencil-square-o"
+														href='${ updateNewUrl }'><i class="fa fa-pencil-square-o"
 														aria-hidden="true"></i> 
 													</a>
 												</td>
@@ -112,7 +119,7 @@
 	<script>
 	var totalPages = ${model.totalPage}
 	var currentPage = ${model.page};
-	var limit = 1 ;
+	var limit = 2 ;
 	$(function () {
         window.pagObj = $('#pagination').twbsPagination({
             totalPages: totalPages,
@@ -125,7 +132,57 @@
             }
         })
     });
-		
+	$('#checkAll').click(function(event) {   
+	    if(this.checked) {
+	        // Iterate each checkbox
+	        $(':checkbox').each(function() {
+	            this.checked = true;                        
+	        });
+	    } else {
+	        $(':checkbox').each(function() {
+	            this.checked = false;                       
+	        });
+	    }
+	}); 
+	function warningBeforeDelete() {
+		Swal.fire({
+			  title: 'Xác nhận xóa',
+			  text: "Bạn có chắc chắn muốn xóa không ?",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Xóa'
+			}).then((result) =>
+			{
+			  if (result.isConfirmed) {
+				  var ids = $('tbody input[type=checkbox]:checked').map(function name() {
+					return $(this).val();
+				  }).get();
+				  deleteNew(ids);
+			    Swal.fire(
+			      'Xóa thành công !',
+			      'Đã xóa',
+			      'success'
+			    )
+			  }
+			})
+	}
+	function deleteNew(ids) {
+		$.ajax({
+			url : '${APIurl}' ,
+			type : 'DELETE' ,
+			contentType : 'application/json' ,
+			data : JSON.stringify(ids),
+			success : function(result) {
+				window.location.href = "${NewURL}?page=1&limit=2&message=delete_success" ;
+			},
+			error : function (error) {
+				window.location.href = "${NewURL}?page=1&limit=2&message=error_system" ;
+			}
+		});
+	}
+	
 	</script>
 </body>
 </html>
